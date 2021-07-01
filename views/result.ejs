@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style.css">
+    <title>Result</title>
+</head>
+<body>
+    <a href="/">Home</a>
+    <a href="/results">Results</a>
+    <h2>Result</h2>
+    <table>
+        <tr>
+            <td>
+                <a href="/images/<%= data.rawImage.file_name %>">
+                    <img src="../images/<%= data.rawImage.file_name %>" alt="image-<%= data.rawImage.id %>" width="300">
+                </a>
+                <a href="/del_main/<%= data.rawImage.id %>">❌</a>
+            </td>
+            <% data.processedImages.forEach(processedImg => { %>
+                <td>
+                    <a href="/images/result/<%= processedImg.file_name %>">
+                        <img src="../images/result/<%= processedImg.file_name %>" alt="image-<%= processedImg.id %>" width="300">
+                        <p>
+                            Segment size: <%= processedImg.options %>
+                        </p> 
+                    </a>
+                    <a href="/del/<%= processedImg.id %>?prevId=<%= data.rawImage.id %>">❌</a>
+                </td>
+            <% }) %>
+        </tr>
+    </table>
+    <h3>Add more</h3>
+    <form action="/add_segment" method="get">
+        <input type="hidden" name="rawImageName" id="rawImageName" value="<%= data.rawImage.file_name %>">
+        <input type="hidden" name="rawImageId" id="rawImageId" value="<%= data.rawImage.id %>">
+        <p id="segmentValue">8</p>
+        <input type="range" name="segmentSize" id="segmentSize" min="3" max="100" value="8" step="1">
+        <button type="submit">Send</button>
+    </form>
+</body>
+<script>
+    let inputSegmentValue = document.getElementById('segmentValue')
+    let inputRange = document.getElementById('segmentSize')
+    inputRange.addEventListener("input", (e) => {
+      inputSegmentValue.innerHTML = e.target.value
+    })
+  </script>
+</html>

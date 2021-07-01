@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/style.css">
+  <title>Segmentation</title>
+</head>
+<body>
+  <h1>Segmentation form</h1>
+  <p>Only *.jpg, *.png files allowed</p>
+  <form action="/segment" method="post" enctype="multipart/form-data">
+    <input type="file" name="image" id="image" accept=".png, .jpg, .jpeg">
+    <p id="segmentValue">8</p>
+    <input type="range" name="segmentSize" id="segmentSize" min="3" max="100" value="8" step="1">
+    <button type="submit">Send</button>
+  </form>
+  <a href="/results">Results</a>
+</body>
+<script>
+  let inputSegmentValue = document.getElementById('segmentValue')
+  let inputRange = document.getElementById('segmentSize')
+  inputRange.addEventListener("input", (e) => {
+    inputSegmentValue.innerHTML = e.target.value
+  })
+</script>
+</html>
