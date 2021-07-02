@@ -4,11 +4,11 @@ Server side written on Node.js + Express + Better-Sqlite
 
 Data base SqLite3
 
-Image processing written on Python3.8 + Numpy + Pillow
+Image processing written on Python3 + Numpy + Pillow
 
 ### Installation
 
-Dowload or Clone project
+Download or Clone project
 ```sh
 git clone https://github.com/superfrost/sergmentation_image_server.git
 ```
@@ -26,8 +26,8 @@ python -m venv venv
 ```
 
 Activate python virtual environment:
-    - Windows: `.\venv\Scripts\activate`
-    - Linux: `source ./venv/bin/activate`
+* Windows: `.\venv\Scripts\activate`
+* Linux: `source ./venv/bin/activate`
 
 Install packages for python: `numpy`, `Pillow`
  ```sh
@@ -42,6 +42,6 @@ Deactivate environment using command: `deactivate`
 
 Go to project folder: `cd ..`
 
-In `server.js` uncoment constant `pythonPath` according to your system
+In `server.js` file uncomment constant `pythonPath` according to your system
 
 Start server: `npm start` or `node server.js` or use PM2 to demonize it
