@@ -6,7 +6,11 @@ const multer = require('multer');
 const { isArray } = require('util');
 const db = require('better-sqlite3')('images.db', { verbose: console.log });
 
-const pythonPath = './python_env/venv/Scripts/python.exe'
+// Windows
+// const pythonPath = './python_env/venv/Scripts/python.exe'
+// Linux
+// const pythonPath = './python_env/venv/bin/python'
+
 const pythonExecScript = './python_env/segmentation.py'
 
 initDirs();
