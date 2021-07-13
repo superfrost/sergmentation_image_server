@@ -1,0 +1,105 @@
+*{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f7f7;
+    background: linear-gradient(90deg, #23a6d5, #23d5ab);
+}
+
+.wrapper{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.card{
+    margin: 5px;
+    border: 1px solid darkblue;
+    border-radius: 6px;
+    box-shadow: 4px 4px 4px #00000085;
+    background-color: white;
+}
+.image{
+    overflow: hidden;
+    border-top-right-radius: 6px;
+    border-top-left-radius: 6px;
+    height: 200px;
+}
+.btns{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+    margin-bottom: 6px;
+}
+.btns a{
+    text-decoration: none;
+    color: black;
+    font-size: 14px;
+    border: 1px darkblue solid;
+    border-radius: 5px;
+    padding: 5px 8px;
+    text-align: center;
+    transition: 250ms;
+}
+
+.btns a:hover, a:focus{
+    color: #fff;
+    background-color: rgb(0, 86, 199);
+}
+
+.btns .del{
+    border: 1px darkred solid;
+}
+.btns .del:hover, .del:focus{
+    color: #fff;
+    background-color: rgba(199, 0, 0, 0.61);
+}
+
+button{
+    appearance: none;
+    outline: none;
+    border: 1px darkblue solid;
+    border-radius: 5px;
+    padding: 5px 8px;
+    text-align: center;
+    transition: 250ms;
+}
+
+.del{
+    border: 1px darkred solid;
+}
+.del:hover, .del:focus{
+    color: #fff;
+    background-color: rgba(199, 0, 0, 0.61);
+}
+
+button:hover, button:focus{
+    color: #fff;
+    background-color: rgb(0, 86, 199);
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+}
+
+form #segmentValue{
+    text-align: center;
+    font-size: 18px;
+}
+
+form button{
+    margin: 5px;
+}
+
+.card h3{
+    text-align: center;
+}
+.date{
+    padding-left: 5px;
+}

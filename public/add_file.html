@@ -4,25 +4,20 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/add_file.css">
   <title>Segmentation</title>
 </head>
 <body>
-  <h1>Segmentation form</h1>
+  <h1>Add file</h1>
   <p>Only *.jpg, *.png files allowed</p>
   <form action="/segment" method="post" enctype="multipart/form-data">
-    <input type="file" name="image" id="image" accept=".png, .jpg, .jpeg">
+    <input type="file" name="image" id="image" accept=".png, .jpg, .jpeg" required>
     <p id="segmentValue">8</p>
     <input type="range" name="segmentSize" id="segmentSize" min="3" max="100" value="8" step="1">
     <button type="submit">Send</button>
   </form>
   <a href="/results">Results</a>
+  <a href="/add_file.html">Add file</a>
 </body>
-<script>
-  let inputSegmentValue = document.getElementById('segmentValue')
-  let inputRange = document.getElementById('segmentSize')
-  inputRange.addEventListener("input", (e) => {
-    inputSegmentValue.innerHTML = e.target.value
-  })
-</script>
+<script src="/range.js"></script>
 </html>

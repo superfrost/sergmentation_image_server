@@ -4,48 +4,63 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="/results.css">
     <title>Result</title>
 </head>
 <body>
-    <a href="/">Home</a>
-    <a href="/results">Results</a>
-    <h2>Result</h2>
-    <table>
-        <tr>
-            <td>
-                <a href="/images/<%= data.rawImage.file_name %>">
-                    <img src="../images/<%= data.rawImage.file_name %>" alt="image-<%= data.rawImage.id %>" width="300">
-                </a>
-                <a href="/del_main/<%= data.rawImage.id %>">❌</a>
-            </td>
-            <% data.processedImages.forEach(processedImg => { %>
-                <td>
+    <nav>
+        <h3>Result</h3>
+        <a href="/add_file.html">Add images</a>
+        <a href="/results">Results</a>
+        <a href="/favorites">Favorites</a>
+        <%= data.user.userName %>
+        <a href="/logout">Logout</a>
+    </nav>
+    <div class="wrapper">
+        <div class="card">
+            <h3>Add more</h3>
+            <form action="/add_segment" method="get">
+                <input type="hidden" name="rawImageName" id="rawImageName" value="<%= data.rawImage.file_name %>">
+                <input type="hidden" name="rawImageId" id="rawImageId" value="<%= data.rawImage.id %>">
+                <p >Segment size:</p>
+                <p id="segmentValue">8</p>
+                <input type="range" name="segmentSize" id="segmentSize" min="3" max="100" value="8" step="1">
+                <button type="submit">Create</button>
+            </form>
+        </div>
+        <div class="card">
+            <a href="/images/<%= data.rawImage.file_name %>">
+                <img src="../images/<%= data.rawImage.file_name %>" alt="image-<%= data.rawImage.id %>" width="300">
+            </a>
+            <div class="date">
+                <p>Date: <%= data.rawImage.date %></p>
+            </div>
+            <div class="btns">
+                <% if(data.user.role) {%>
+                    <a class="del" href="/del_main/<%= data.rawImage.id %>">Delete</a>
+                <% } %>
+                <a href="/favorites/<%= data.rawImage.id %>">To Favorite</a>
+            </div>
+        </div>
+        <% data.processedImages.forEach(processedImg => { %>
+            <div class="card">
+                <div class="image">
                     <a href="/images/result/<%= processedImg.file_name %>">
                         <img src="../images/result/<%= processedImg.file_name %>" alt="image-<%= processedImg.id %>" width="300">
-                        <p>
-                            Segment size: <%= processedImg.options %>
-                        </p> 
                     </a>
-                    <a href="/del/<%= processedImg.id %>?prevId=<%= data.rawImage.id %>">❌</a>
-                </td>
-            <% }) %>
-        </tr>
-    </table>
-    <h3>Add more</h3>
-    <form action="/add_segment" method="get">
-        <input type="hidden" name="rawImageName" id="rawImageName" value="<%= data.rawImage.file_name %>">
-        <input type="hidden" name="rawImageId" id="rawImageId" value="<%= data.rawImage.id %>">
-        <p id="segmentValue">8</p>
-        <input type="range" name="segmentSize" id="segmentSize" min="3" max="100" value="8" step="1">
-        <button type="submit">Send</button>
-    </form>
+                </div>
+                <div class="date">
+                    <p>Date: <%= processedImg.date %></p>
+                    <p>Segment size: <%= processedImg.options %></p> 
+                </div>
+                <div class="btns">
+                    <% if(data.user.role) {%>
+                        <a class="del" href="/del/<%= processedImg.id %>?prevId=<%= data.rawImage.id %>">Delete</a>
+                    <% } %>
+                </div>
+            </div>
+        <% }) %>
+    </div>
 </body>
-<script>
-    let inputSegmentValue = document.getElementById('segmentValue')
-    let inputRange = document.getElementById('segmentSize')
-    inputRange.addEventListener("input", (e) => {
-      inputSegmentValue.innerHTML = e.target.value
-    })
-  </script>
+<script src="/range.js"></script>
 </html>

@@ -2,5 +2,7 @@
 *.db
 .env
 
+
 /public/images
 /python_env/venv
+/react_client

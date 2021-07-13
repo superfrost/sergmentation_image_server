@@ -4,20 +4,39 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./results.css">
     <title>Results</title>
 </head>
 <body>
-    <h2>Results</h2>
-    <a href="/">Add image</a>
-    <table>
+    <nav>
+        <div>
+            Gallery
+        </div>
+        <a href="/add_file.html">Add images</a>
+        <a href="/results">Results</a>
+        <a href="/favorites">Favorites</a>
+        <%= data.user.userName %>
+        <a href="/logout">Logout</a>
+    </nav>
+    <div class="wrapper">
     <% data.rows.forEach(result => {%>
-        <tr>
-            <a href="./result/<%= result.id %>">
-                <img src="./images/mini/<%= result.file_name %>" alt="image-<%= result.id %>" width="300">
-            </a>
-        </tr>
+        <div class="card">
+            <div class="image">
+                <a href="./result/<%= result.id %>">
+                    <img src="./images/mini/<%= result.file_name %>" alt="image-<%= result.id %>" width="300">
+                </a>
+            </div>
+            <div class="date">
+                <p>Date: <%= result.date %></p>
+            </div>
+            <div class="btns">
+                <% if(data.user.role) {%>
+                <a class="del" href="/del_main/<%= result.id %>">Delete</a>
+               <% } %>
+                <a href="/favorites/<%= result.id %>">To Favorite</a>
+            </div>
+        </div>
     <% }) %>
-    </table>
+    </div>
 </body>
 </html>
