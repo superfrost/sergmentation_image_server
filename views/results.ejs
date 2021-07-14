@@ -9,10 +9,8 @@
 </head>
 <body>
     <nav>
-        <div>
-            Gallery
-        </div>
-        <a href="/add_file.html">Add images</a>
+        <h3>Gallery</h3>
+        <a href="/add_file">Add images</a>
         <a href="/results">Results</a>
         <a href="/favorites">Favorites</a>
         <%= data.user.userName %>
@@ -37,6 +35,15 @@
             </div>
         </div>
     <% }) %>
+    </div>
+    <div>
+        <% if (data.pages.numOfPages > 0) { %>
+            <ul>
+                <% if (data.pages.numOfPages > 1) { %>
+                MORE
+                <% } %>
+            </ul>
+        <% } %>
     </div>
 </body>
 </html>

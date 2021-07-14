@@ -66,7 +66,7 @@ app.use(
 )
 
 app.get("/login", (req, res) => {
-  res.sendFile(path.join(process.cwd(), '/public','/login.html'))
+  res.render("login")
 })
 
 app.post('/auth', async (req, res) => {
@@ -106,6 +106,15 @@ app.get("/", (req, res) => {
   res.redirect("/results")
 })
 
+app.get("/add_file", (req, res) => {
+  user = {
+    id:   req.session.userId,
+    role: req.session.user_role,
+    userName: req.session.userName,
+  }
+  res.render("add_file", {data: {user}})
+})
+
 app.get("/favorites", (req, res) => {
   const userId = req.session.userId.toString()
   user = {
@@ -114,7 +123,6 @@ app.get("/favorites", (req, res) => {
     userName: req.session.userName,
   }
   const rows = db.prepare(`SELECT * FROM favorite JOIN images ON favorite.image_id = images.id AND user_id = ?`).all(userId)
-  console.log(rows);
   res.render("favorites", {data: {rows, user},})
 })
 
@@ -127,11 +135,6 @@ app.get("/favorites/:id", (req, res) => {
   }
   res.redirect('/results')
 })
-
-function getFavoriteFromDb(image_Id, user_Id) {
-  const result = db.prepare("SELECT * FROM favorite WHERE image_id = ? AND user_id = ?").get(image_Id, user_Id)
-  return result
-}
 
 app.get("/unfavorite/:id", (req, res) => {
   const imageId = req.params.id
@@ -153,14 +156,27 @@ app.get("/logout", (req, res) => {
 
 
 app.get('/results', (req, res) => {
-  const rows = db.prepare(`SELECT * FROM images`).all();
+  const count = db.prepare(`SELECT COUNT(*) FROM images`).get();
+  const numberOfImages = count['COUNT(*)']
+  const currentPage = req.query.page_number || 1 
+  const limit = req.query.limit || 10
+  const numOfPages = Math.ceil(numberOfImages / limit)
+  const offset = limit * currentPage - limit
+
+  // const limit = 4;
+  // const offset = 0;
+  const rows = db.prepare(`SELECT * FROM images LIMIT ? OFFSET ?`).all(limit, offset);
   user = {
     id:   req.session.userId,
     role: req.session.user_role,
     userName: req.session.userName,
   }
-  console.log(rows);
-  res.render('results', {data: {rows, user}})
+  pages = {
+    currentPage,
+    numOfPages,
+    limit,
+  }
+  res.render('results', {data: {rows, user, pages}})
 })
 
 app.get('/result/:id', (req, res) => {
@@ -177,7 +193,6 @@ app.get('/result/:id', (req, res) => {
     role: req.session.user_role,
     userName: req.session.userName,
   }
-  console.log(rawImage, processedImages);
   res.render('result', {data: {rawImage, processedImages, user}})
 })
 
@@ -198,7 +213,6 @@ app.get('/del/:id', (req, res) => {
   }
 
   const row = db.prepare(`SELECT * FROM result WHERE id = ?`).get(id)
-  console.log(row);
   let fileName = row?.file_name.toString()
   deleteFileFromResults(fileName)
   deleteFromResultDBbyId(id)
@@ -245,7 +259,6 @@ app.get('/add_segment', (req, res) => {
 
   const fileNameBeingInserted = 'result-' + updatingImageId + '-' + sizeOfSegment + '.jpg'
   const isImageInDb = db.prepare("SELECT * FROM result WHERE file_name = ?").get(fileNameBeingInserted)
-  console.log("IS Image in DB: ", isImageInDb);
 
   if (!sizeOfSegment || !updatingImageId || !imageFileName) {
     console.log(`Error. add_segment some parameters are missed`);
@@ -265,15 +278,12 @@ app.post('/segment', upload.single('image'), function (req, res) {
     res.send('Error. No file attached!')
     return
   }
-  console.log(req.file);
-  console.log('Segment size:' + req.body?.segmentSize);
 
   let fileName = req.file.filename
   let sizeOfSegment = req.body?.segmentSize ?? "8"
 
   if (req.file && req.file.filename) { 
-    const info = db.prepare(`INSERT OR IGNORE INTO images(file_name, date) VALUES(?, datetime('now'))`).run(req.file.filename);
-    console.log(info);
+    const info = db.prepare(`INSERT INTO images(file_name, date) VALUES(?, datetime('now'))`).run(req.file.filename);
     insertedImageId = info?.lastInsertRowid?.toString()
 
     segmentateImageByPythonScript(pythonPath, pythonExecScript, fileName, sizeOfSegment, insertedImageId, 1)
@@ -381,6 +391,11 @@ function unfavoriteImageFromDbByImageId(image_id, user_id) {
   const info = db.prepare("DELETE FROM favorite WHERE image_id = ? AND user_id = ?").run(image_id, user_id)
   console.log(info);
   return info
+}
+
+function getFavoriteFromDb(image_Id, user_Id) {
+  const result = db.prepare("SELECT * FROM favorite WHERE image_id = ? AND user_id = ?").get(image_Id, user_Id)
+  return result
 }
 
 function isAuth(req, res, next) {

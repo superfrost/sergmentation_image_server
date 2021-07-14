@@ -10,7 +10,7 @@
 <body>
     <nav>
         <h3>Result</h3>
-        <a href="/add_file.html">Add images</a>
+        <a href="/add_file">Add images</a>
         <a href="/results">Results</a>
         <a href="/favorites">Favorites</a>
         <%= data.user.userName %>
@@ -22,16 +22,18 @@
             <form action="/add_segment" method="get">
                 <input type="hidden" name="rawImageName" id="rawImageName" value="<%= data.rawImage.file_name %>">
                 <input type="hidden" name="rawImageId" id="rawImageId" value="<%= data.rawImage.id %>">
-                <p >Segment size:</p>
+                <p>Segment size:</p>
                 <p id="segmentValue">8</p>
                 <input type="range" name="segmentSize" id="segmentSize" min="3" max="100" value="8" step="1">
                 <button type="submit">Create</button>
             </form>
         </div>
         <div class="card">
-            <a href="/images/<%= data.rawImage.file_name %>">
-                <img src="../images/<%= data.rawImage.file_name %>" alt="image-<%= data.rawImage.id %>" width="300">
-            </a>
+            <div class="image">
+                <a href="/images/<%= data.rawImage.file_name %>">
+                    <img src="../images/<%= data.rawImage.file_name %>" alt="image-<%= data.rawImage.id %>" width="300">
+                </a>
+            </div>
             <div class="date">
                 <p>Date: <%= data.rawImage.date %></p>
             </div>

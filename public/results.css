@@ -1,27 +1,60 @@
 *{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-
 body{
     box-sizing: border-box;
     margin: 0;
     padding: 0;
     background-color: #f7f7f7;
-    background: linear-gradient(90deg, #23a6d5, #23d5ab);
+    background: linear-gradient(45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
 }
-
+@keyframes gradient {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+}
+nav{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #ffffff33;
+    padding: 5px;
+    border-bottom: 1px solid #ffffffcc;
+}
+nav a{
+    outline: none;
+    text-decoration: none;
+    color: #000;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 6px;
+    padding: 10px 15px;
+    transition: 250ms;
+}
+nav a:hover, nav a:focus{
+    background-color: #ffffff98;
+}
+.add_file{
+    margin: 0 auto;
+    margin-top: 50px;
+    text-align: center;
+    border: 2px solid white;
+    border-radius: 8px;
+    min-width: 300px;
+    background-color: rgba(255, 255, 255, 0.5);
+}
 .wrapper{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
 }
-
 .card{
     margin: 5px;
-    border: 1px solid darkblue;
+    border: 1px solid rgba(0, 0, 0, 0.3);
     border-radius: 6px;
     box-shadow: 4px 4px 4px #00000085;
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.9);
 }
 .image{
     overflow: hidden;
@@ -45,20 +78,17 @@ body{
     text-align: center;
     transition: 250ms;
 }
-
-.btns a:hover, a:focus{
+.btns a:hover, .btns a:focus{
     color: #fff;
     background-color: rgb(0, 86, 199);
 }
-
 .btns .del{
     border: 1px darkred solid;
 }
-.btns .del:hover, .del:focus{
+.btns .del:hover, .btns .del:focus{
     color: #fff;
     background-color: rgba(199, 0, 0, 0.61);
 }
-
 button{
     appearance: none;
     outline: none;
@@ -68,7 +98,6 @@ button{
     text-align: center;
     transition: 250ms;
 }
-
 .del{
     border: 1px darkred solid;
 }
@@ -76,27 +105,22 @@ button{
     color: #fff;
     background-color: rgba(199, 0, 0, 0.61);
 }
-
 button:hover, button:focus{
     color: #fff;
     background-color: rgb(0, 86, 199);
 }
-
 form{
     display: flex;
     flex-direction: column;
     width: 250px;
 }
-
 form #segmentValue{
     text-align: center;
     font-size: 18px;
 }
-
 form button{
     margin: 5px;
 }
-
 .card h3{
     text-align: center;
 }
