@@ -5,18 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./results.css">
+    <link rel="stylesheet" href="/nav.css">
     <title>Results</title>
 </head>
 <body>
-    <nav>
-        <h3>Gallery</h3>
-        <a href="/add_file">Add images</a>
-        <a href="/results">Results</a>
-        <a href="/favorites">Favorites</a>
-        <%= data.user.userName %>
-        <a href="/logout">Logout</a>
-    </nav>
+
+<%- include('partials/nav'); %>
+
     <div class="wrapper">
+        <% if(!data.rows[0]) {%>
+            <p> <%=  "Nothing to show" %> </p>
+        <% } %>
     <% data.rows.forEach(result => {%>
         <div class="card">
             <div class="image">
@@ -31,7 +30,11 @@
                 <% if(data.user.role) {%>
                 <a class="del" href="/del_main/<%= result.id %>">Delete</a>
                <% } %>
-                <a href="/favorites/<%= result.id %>">To Favorite</a>
+                <% if(result.user_id) {%>
+                    <a href="/unfavorite/<%= result.id %>">🧡</a>
+                <% } else {%>
+                    <a href="/favorites/<%= result.id %>">🖤</a>
+                <% } %>
             </div>
         </div>
     <% }) %>
@@ -39,8 +42,29 @@
     <div>
         <% if (data.pages.numOfPages > 0) { %>
             <ul>
-                <% if (data.pages.numOfPages > 1) { %>
-                MORE
+                <% if (data.pages.numOfPages == 1) { %>
+                    <li class="disabled"><a>First</a></li>
+                <% } else { %>
+                    <li><a href="/products/1">First</a></li>
+                <% } %>
+                <% let i = (Number(data.pages.currentPage) > 5 ? Number(data.pages.currentPage) - 4 : 1) %>
+                <% if (i !== 1) { %>
+                    <li class="disabled"><a>...</a></li>
+                <% } %>
+                <% for (; i <= (Number(data.pages.currentPage) + 4) && i <= data.pages.numOfPages; i++) { %>
+                    <% if (i == data.pages.currentPage) { %>
+                        <li class="active"><a><%= i %></a></li>
+                    <% } else { %>
+                        <li><a href="/products/<%= i %>"><%= i %></a></li>
+                    <% } %>
+                    <% if (i == Number(data.pages.currentPage) + 4 && i < data.pages.numOfPages) { %>
+                        <li class="disabled"><a>...</a></li>
+                    <% } %>
+                <% } %>
+                <% if (data.pages.currentPage == data.pages.numOfPages) { %>
+                    <li class="disabled"><a>Last</a></li>
+                <% } else { %>
+                    <li><a href="/products/<%= pages %>">Last</a></li>
                 <% } %>
             </ul>
         <% } %>

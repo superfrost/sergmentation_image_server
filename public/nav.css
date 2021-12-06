@@ -1,0 +1,24 @@
+nav{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #ffffff33;
+  padding: 5px;
+  border-bottom: 1px solid #ffffffcc;
+}
+nav a{
+  outline: none;
+  text-decoration: none;
+  color: #000;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 6px;
+  padding: 10px 15px;
+  transition: 250ms;
+}
+nav a:hover, nav a:focus{
+  background-color: #ffffff98;
+}

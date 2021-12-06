@@ -5,19 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./results.css">
+    <link rel="stylesheet" href="/nav.css">
     <title>Favorites</title>
 </head>
 <body>
-    <nav>
-        <h3>Favorites</h3>
-        <a href="/add_file">Add images</a>
-        <a href="/results">Results</a>
-        <a href="/favorites">Favorites</a>
-        <%= data.user.userName %>
-        <a href="/logout">Logout</a>
-    </nav>
+    
+    <%- include('partials/nav'); %>
+
     <div class="wrapper">
-        <% data.rows.forEach(result => {%>
+        <% if(!data.favoriteImages[0]) {%>
+            <p> <%=  "Nothing to show" %> </p>
+        <% } %>
+        <% data.favoriteImages.forEach(result => {%>
             <div class="card">
                 <div class="image">
                     <a href="./result/<%= result.id %>">
@@ -29,7 +28,7 @@
                 </div>
                 <div class="btns">
                     <a class="del" href="/del_main/<%= result.id %>">Delete</a>
-                    <a href="/unfavorite/<%= result.id %>">Un Favorite</a>
+                    <a href="/unfavorite/<%= result.id %>">🧡</a>
                 </div>
             </div>
         <% }) %>

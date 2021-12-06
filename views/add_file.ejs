@@ -5,17 +5,13 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/results.css">
+  <link rel="stylesheet" href="/nav.css">
   <title>Segmentation</title>
 </head>
 <body>
-  <nav>
-    <h3>Add file</h3>
-    <a href="/add_file">Add images</a>
-    <a href="/results">Results</a>
-    <a href="/favorites">Favorites</a>
-    <%= data.user.userName %>
-    <a href="/logout">Logout</a>
-  </nav>
+
+  <%- include('partials/nav'); %>
+
   <form class="add_file" action="/segment" method="post" enctype="multipart/form-data">
     <h1>Add file</h1>
     <p>Only *.jpg, *.png files allowed</p>

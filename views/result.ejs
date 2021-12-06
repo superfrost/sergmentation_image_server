@@ -5,24 +5,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/results.css">
+    <link rel="stylesheet" href="/nav.css">
     <title>Result</title>
 </head>
 <body>
-    <nav>
-        <h3>Result</h3>
-        <a href="/add_file">Add images</a>
-        <a href="/results">Results</a>
-        <a href="/favorites">Favorites</a>
-        <%= data.user.userName %>
-        <a href="/logout">Logout</a>
-    </nav>
+
+    <%- include('partials/nav'); %>
+
     <div class="wrapper">
         <div class="card">
             <h3>Add more</h3>
             <form action="/add_segment" method="get">
                 <input type="hidden" name="rawImageName" id="rawImageName" value="<%= data.rawImage.file_name %>">
                 <input type="hidden" name="rawImageId" id="rawImageId" value="<%= data.rawImage.id %>">
-                <p>Segment size:</p>
+                <p class="segment-size">Segment size:</p>
                 <p id="segmentValue">8</p>
                 <input type="range" name="segmentSize" id="segmentSize" min="3" max="100" value="8" step="1">
                 <button type="submit">Create</button>
@@ -41,7 +37,11 @@
                 <% if(data.user.role) {%>
                     <a class="del" href="/del_main/<%= data.rawImage.id %>">Delete</a>
                 <% } %>
-                <a href="/favorites/<%= data.rawImage.id %>">To Favorite</a>
+                <% if(data.rawImage.user_id) {%>
+                    <a href="/unfavorite/<%= data.rawImage.id %>">🧡</a>
+                <% } else { %>
+                    <a href="/favorites/<%= data.rawImage.id %>">🖤</a>
+                <% } %>
             </div>
         </div>
         <% data.processedImages.forEach(processedImg => { %>

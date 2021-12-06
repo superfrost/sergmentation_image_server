@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/login.css">
+    <link rel="stylesheet" href="/nav.css">
+    <title>Profile</title>
+</head>
+<body>
+
+<%- include('partials/nav'); %>
+
+    <div class="wrapper">
+        <div class="container">
+            <h1>Profile</h1>
+            <form class="form" method="post" action="/profile/<%= data.user.id %>">
+                <div class="email">Email: <b><%= data.user.userName %></b></div>
+                <label for="nick">Nick:</label>
+                <input type="text" name="nick" id="nick" value="<%= data.user.userNickName %>" required>
+                <label for="telegramId">Telegram ID:</label>
+                <input type="text" name="telegramId" id="telegramId" value="<%= data.user.userTelegramID %>" >
+                <p class="info">Add telegram id to have opportunity to connect to telegram bot and interact with it.</p>
+                <p>Our bot: <a href="<%= data.bot_address %>">segmentation_bot</a></p>
+                <button type="submit" class="btn-save">Save</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

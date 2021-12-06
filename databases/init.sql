@@ -14,9 +14,11 @@ CREATE TABLE IF NOT EXISTS result (
 
 CREATE TABLE IF NOT EXISTS users (
   id INTEGER PRIMARY KEY NOT NULL,
-  username TEXT NOT NULL,
+  username TEXT NOT NULL UNIQUE,
   password TEXT NOT NULL,
-  role INTEGER NOT NULL
+  role INTEGER NOT NULL,
+  nick_name TEXT NOT NULL,
+  telegram_id integer
 );
 
 CREATE TABLE IF NOT EXISTS favorite (
@@ -28,5 +30,5 @@ CREATE TABLE IF NOT EXISTS favorite (
 -- test data
 -- admin password: 1234
 -- guest password: 0000
-INSERT OR IGNORE INTO users(id, username, password, role) VALUES(1, 'admin', '$2b$12$aC8FNIeznOUVhNO65bvsw.Eu29.jW6dWyLsrJ0Lxj1u9/mn2XYD7.', 1);
-INSERT OR IGNORE INTO users(id, username, password, role) VALUES(2, 'guest', '$2b$12$fYMAKq.loh.tIMi4xDecB.eFjjJEcw8lCgopHhy3wLIpTiXD1fv7.', 0);
+INSERT OR IGNORE INTO users(id, username, password, role, nick_name) VALUES(1, 'admin', '$2b$12$aC8FNIeznOUVhNO65bvsw.Eu29.jW6dWyLsrJ0Lxj1u9/mn2XYD7.', 1, 'admin');
+INSERT OR IGNORE INTO users(id, username, password, role, nick_name) VALUES(2, 'guest', '$2b$12$fYMAKq.loh.tIMi4xDecB.eFjjJEcw8lCgopHhy3wLIpTiXD1fv7.', 0, 'guest');

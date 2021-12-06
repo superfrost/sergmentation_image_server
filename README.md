@@ -1,6 +1,6 @@
 ### This is image processing server
 
-Server side written on Node.js + Express + Better-Sqlite
+Server side written on Node.js + Express
 
 Data base SqLite3
 
@@ -41,7 +41,5 @@ Install packages for python: `numpy`, `Pillow`
 Deactivate environment using command: `deactivate`
 
 Go to project folder: `cd ..`
-
-In `server.js` file uncomment constant `pythonPath` according to your system
 
 Start server: `npm start` or `node server.js` or use PM2 to demonize it
